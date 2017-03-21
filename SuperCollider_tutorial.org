@@ -1,0 +1,174 @@
+#+TITLE: SuperCollider Tutorial
+(or how to make a computer go beep!)
+#+OPTIONS: toc:nil
+* Introduction
+SuperCollider[fn:1] is a programming environment for sound synthesis and algorithmic composition.
+It can be used for real time performances and to build interactive installations or create standalone applications,
+ such as VST plugins and audio processors. It is an Object Oriented Programming (OOP) language and it resembles to SmallTalk.
+Some examples of Ugens in SC.
+#+BEGIN_SRC sclang
+SinOsc; LFNoise1; GVerb; LFNoise1; TGrains
+#+END_SRC
+** The IDE
+To run some code press cmd+Enter or shift+Enter,
+normally, the code resides in brackets =(...)= which can execute
+by double clicking inside the parenthesis
+#+BEGIN_SRC sclang
+(
+a = {1 + 220 / (1 + 2 * 3); "Hello World!";};
+a.value;
+)
+#+END_SRC
+
+*** The Post Window
+Reading errors, debugging code. The post window returns errors
+and messages during our interaction with SC
+** Help in SC
+See Help file in the IDE, help file contains some very interesting tutorials
+first steps with SC.
+** methods
+Ugens respond to a set of methods that instruct what to do. Most basic methods are .ar (audio rate) and .kr (control rate).
+For example, to hear a sine oscillator we would use .ar to use it as control we use .kr
+#+BEGIN_SRC sclang
+SinOsc.ar vs. SinOsc.kr
+#+END_SRC
+** Comments
+Sometimes we want to put some notes in our programs
+#+BEGIN_SRC sclang
+SinOsc.ar() // this is a sine oscillator!
+#+END_SRC
+** Arrays
+Arrays denoted with square brackets =[ ]= and take some methods
+#+BEGIN_SRC sclang
+[ 1, 2, 3, 4 ].reverse; //reversing the order of the items in the array.
+[ SinOsc.ar, SinOsc] // this is also possible, covered later
+#+END_SRC
+** Symbols
+Symbols are unique names denoted by \ or ' '
+#+BEGIN_SRC sclang
+\foo 'foo' //same thing
+#+END_SRC
+* Variables
+A variable is used to assign a value or Ugen to a name so it can be used by calling it.
+/~globalVar can be used anywhere in the program./
+#+BEGIN_SRC sclang
+(
+~globalVar = 20.0; // a global variable can be also defined anytime
+var aVar = 20.0; // this variable can be used only inside a region
+var msx = MouseX.kr();
+)
+#+END_SRC
+* Functions
+Functions are building blocks of our patches and are denoted using
+curly brackets {...} can take method, such as .play
+#+BEGIN_SRC sclang
+x = { i = 5; i.postln; }; or  [1, 2, 3, 4].do{ arg i; i.postln; };
+#+END_SRC
+** Interaction with arguments
+To interact with a function we need to define arguments and give a default value e.g.
+~{arg foo = 2;}~ or using the pipe symbol denoted | |
+#+BEGIN_SRC sclang
+x = { arg foo = 2; foo + 10.rand };
+x.value; // this evaluates the function
+#+END_SRC
+*** example with sound:
+#+BEGIN_SRC sclang
+x = {
+        SinOsc.ar(freq:\foo.kr(220.0), mul:0.6) // defining directly in Ugen
+}.play;
+#+END_SRC
+*** now we can change the frequency with this line
+#+BEGIN_SRC sclang
+x.set(\foo, 420.0);
+#+END_SRC
+*** Tip: different functions can have same arguments
+* Control Structure
+Boolean true -if this, do that!
+** Conditionals
+#+BEGIN_SRC sclang
+(
+a = 1;
+if(a == 1) { "true".postln } {"false".postln }; // if equal then true
+)
+
+(
+a = 2;
+if(a > 1) { "true".postln } {"false".postln }; // if bigger then true
+)
+#+END_SRC
+/there is also else, while, and for/
+* Start your engines
+TO start the sound in SC first you need to start the server with ctr+b (in IDE)
+It is useful but not necessary to check the servers options, in case you need to
+change the in/out busses, do not forget to reboot the server after this, for
+the new options to take effect.
+#+BEGIN_SRC sclang
+o = Server.local.options;
+o.numOutputBusChannels_(4);
+s.reboot;
+o.numOutputBusChannels; //test
+s.meter
+#+END_SRC
+* SynthDefs
+#+BEGIN_SRC sclang
+(
+SynthDef.new(\blip, {| out = 0 |
+var sig, env;
+
+	sig = SinOsc.ar(\freq.kr(220, 0.3));
+	env = EnvGen.kr(Env.perc(\attack.kr(0.03), \release.kr(0.5),
+        doneAction: 2);
+	sig = sig * env * \amp.kr(0.2);
+        sig = Pan2.ar(sig, LFNoise1.kr(1).range(-1,1));
+
+        Out.ar(out, sig)
+}).add;
+)
+#+END_SRC
+** Synth
+Synths are instances of SynthDefs and provide ways to interact with
+Once we initiate it with something like this:
+#+begin_src sclang
+~synth = Synth(\blip, [\freq, 440] );
+#+end_src
+We use .set to interact from anywhere i.e a GUI, or another function.
+#+BEGIN_SRC sclang
+~synth.set(\freq, 620.0);
+#+END_SRC
+* Tasks, Routines
+Tasks and routines are used to schedule various things
+#+BEGIN_SRC sclang
+(
+t = Task({|i| 10.do{ ( rrand(1, 10) * i.squostln; 0.25.wait;} });
+)
+t.start;
+t.stop;
+t.pause;
+t.resume;
+t.reset;
+#+END_SRC
+* Events
+** Streams
+** Patterns
+#+BEGIN_SRC sclang
+Pbindef(\x, \dur, 0.2, \freq, Prand(Array.series(10, 100, 100), inf)).play;
+#+END_SRC
+* JITLib
+JITLib is a library for SC that provides ways
+to interact with running processes and other conveniences for live coding.
+* Resources
+SC [[http://supercollider.github.io][homepage]]
+SC [[http://doc.sccode.org/Guides/Glossary.html][Glossary]]
+Examples of code [[http://sccode.org][SCCode.org]]
+
+Other reading material and [[https://ccrma.stanford.edu/~ruviaro/texts/A_Gentle_Introduction_To_SuperCollider.pdf][documentation]] of SC.
+
+The material of the JITLib workshop can be found at [[https://github.com/KonVas/Ionio-liveCode-workshop][this repository in GitHub]].
+* Footnotes
+[fn:1][[http://supercollider.github.io][Download SuperCollider here.]]
+* Credits
+Julian Rohrhuber for [[http://wertlos.org/~rohrhuber/] [JITLib]]
+
+Stealth fontification only occurs while the system remains unloadefjhjsdf d
+If the system load rises above ‘jit-lock-stealth-load’ percent, stealth
+fontification is suspended.  Stealth fontification intensity is                                                                               djfjejjwjjjjj
