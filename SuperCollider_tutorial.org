@@ -1,11 +1,12 @@
-#+TITLE: SuperCollider Tutorial
-(or how to make a computer go beep!)
+#+TITLE: A very brief overview of SuperCollider
 #+OPTIONS: toc:nil
 * Introduction
 SuperCollider[fn:1] is a programming environment for sound synthesis and algorithmic composition.
-It can be used for real time performances and to build interactive installations or create standalone applications,
- such as VST plugins and audio processors. It is an Object Oriented Programming (OOP) language and it resembles to SmallTalk.
-Some examples of Ugens in SC.
+It can be used for creative coding projects that employ synthesising sound in
+real time such as, live performance, interactive installations
+and standalone applications (e.g.: VST and audio processors).
+
+** Some examples of Ugens in the SuperCollider environment are as follow:
 #+BEGIN_SRC sclang
 SinOsc; LFNoise1; GVerb; LFNoise1; TGrains
 #+END_SRC
@@ -160,15 +161,9 @@ to interact with running processes and other conveniences for live coding.
 SC [[http://supercollider.github.io][homepage]]
 SC [[http://doc.sccode.org/Guides/Glossary.html][Glossary]]
 Examples of code [[http://sccode.org][SCCode.org]]
-
-Other reading material and [[https://ccrma.stanford.edu/~ruviaro/texts/A_Gentle_Introduction_To_SuperCollider.pdf][documentation]] of SC.
-
-The material of the JITLib workshop can be found at [[https://github.com/KonVas/Ionio-liveCode-workshop][this repository in GitHub]].
+Other reading material and [[https://ccrma.stanford.edu/~ruviaro/texts/A_Gentle_Introduction_To_SuperCollider.pdf][documentation]].
 * Footnotes
 [fn:1][[http://supercollider.github.io][Download SuperCollider here.]]
 * Credits
-Julian Rohrhuber for [[http://wertlos.org/~rohrhuber/] [JITLib]]
-
-Stealth fontification only occurs while the system remains unloadefjhjsdf d
-If the system load rises above ‘jit-lock-stealth-load’ percent, stealth
-fontification is suspended.  Stealth fontification intensity is                                                                               djfjejjwjjjjj
+The SuperCollider [[http://supercollider.github.io/community/mailing-lists][community]].
+Julian Rohrhuber for [[http://wertlos.org/~rohrhuber/][JITLib]].
