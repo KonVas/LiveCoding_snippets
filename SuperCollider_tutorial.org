@@ -5,57 +5,55 @@ SuperCollider[fn:1] is a programming environment for sound synthesis and algorit
 It can be used for creative coding projects that employ synthesising sound in
 real time such as, live performance, interactive installations
 and standalone applications (e.g.: VST and audio processors).
-
-** Examples of Ugens
+** First steps
+This sound can be yours
 #+BEGIN_SRC sclang
-SinOsc; LFNoise1; GVerb; LFNoise1; TGrains
+(
+Ndef(\paddin, {
+	var sig = WhiteNoise.ar(0.01);
+	sig = Ringz.ar(sig, {ExpRand(120.0, 680.0)}!8, 30.0, 0.1);
+	sig = Splay.ar(sig);
+}).play;
+)
 #+END_SRC
-
 ** The IDE
-To run some code press cmd+Enter or shift+Enter,
-normally, the code resides in brackets =(...)= which can execute
-by double clicking inside the parenthesis
+To run the above code press cmd+Enter or shift+Enter,
+inside the parenthesis =(...)=. Also check out what happens if you run
+the block below.
 #+BEGIN_SRC sclang
 (
 a = {1 + 220 / (1 + 2 * 3); "Hello World!";};
 a.value;
 )
 #+END_SRC
-
 *** The Post Window
 Reading errors, debugging code. The post window returns errors
 and messages during our interaction with SC
-
 ** Help in SC
 See Help file in the IDE, help file contains some very interesting tutorials
 first steps with SC.
-
 ** methods
 Ugens respond to a set of methods that instruct what to do. Most basic methods are .ar (audio rate) and .kr (control rate).
 For example, to hear a sine oscillator we would use .ar to use it as control we use .kr
 #+BEGIN_SRC sclang
 SinOsc.ar vs. SinOsc.kr
 #+END_SRC
-
 ** Comments
 Sometimes we want to put some notes in our programs
 #+BEGIN_SRC sclang
 SinOsc.ar() // this is a sine oscillator!
 #+END_SRC
-
 ** Arrays
 Arrays denoted with square brackets =[ ]= and take some methods
 #+BEGIN_SRC sclang
 [ 1, 2, 3, 4 ].reverse; //reversing the order of the items in the array.
 [ SinOsc.ar, SinOsc] // this is also possible, covered later
 #+END_SRC
-
 ** Symbols
 Symbols are unique names denoted by \ or ' '
 #+BEGIN_SRC sclang
 \foo 'foo' //same thing
 #+END_SRC
-
 * Variables
 A variable is used to assign a value or Ugen to a name so it can be used by calling it.
 /~globalVar can be used anywhere in the program./
@@ -173,5 +171,4 @@ Other reading material and [[https://ccrma.stanford.edu/~ruviaro/texts/A_Gentle_
 [fn:1][[http://supercollider.github.io][Download SuperCollider here.]]
 * Credits
 The SuperCollider [[http://supercollider.github.io/community/mailing-lists][community]].
-
 Julian Rohrhuber for [[http://wertlos.org/~rohrhuber/][JITLib]].
