@@ -6,10 +6,11 @@ It can be used for creative coding projects that employ synthesising sound in
 real time such as, live performance, interactive installations
 and standalone applications (e.g.: VST and audio processors).
 
-** Some examples of Ugens in the SuperCollider environment are as follow:
+** Examples of Ugens
 #+BEGIN_SRC sclang
 SinOsc; LFNoise1; GVerb; LFNoise1; TGrains
 #+END_SRC
+
 ** The IDE
 To run some code press cmd+Enter or shift+Enter,
 normally, the code resides in brackets =(...)= which can execute
@@ -24,31 +25,37 @@ a.value;
 *** The Post Window
 Reading errors, debugging code. The post window returns errors
 and messages during our interaction with SC
+
 ** Help in SC
 See Help file in the IDE, help file contains some very interesting tutorials
 first steps with SC.
+
 ** methods
 Ugens respond to a set of methods that instruct what to do. Most basic methods are .ar (audio rate) and .kr (control rate).
 For example, to hear a sine oscillator we would use .ar to use it as control we use .kr
 #+BEGIN_SRC sclang
 SinOsc.ar vs. SinOsc.kr
 #+END_SRC
+
 ** Comments
 Sometimes we want to put some notes in our programs
 #+BEGIN_SRC sclang
 SinOsc.ar() // this is a sine oscillator!
 #+END_SRC
+
 ** Arrays
 Arrays denoted with square brackets =[ ]= and take some methods
 #+BEGIN_SRC sclang
 [ 1, 2, 3, 4 ].reverse; //reversing the order of the items in the array.
 [ SinOsc.ar, SinOsc] // this is also possible, covered later
 #+END_SRC
+
 ** Symbols
 Symbols are unique names denoted by \ or ' '
 #+BEGIN_SRC sclang
 \foo 'foo' //same thing
 #+END_SRC
+
 * Variables
 A variable is used to assign a value or Ugen to a name so it can be used by calling it.
 /~globalVar can be used anywhere in the program./
@@ -166,4 +173,5 @@ Other reading material and [[https://ccrma.stanford.edu/~ruviaro/texts/A_Gentle_
 [fn:1][[http://supercollider.github.io][Download SuperCollider here.]]
 * Credits
 The SuperCollider [[http://supercollider.github.io/community/mailing-lists][community]].
+
 Julian Rohrhuber for [[http://wertlos.org/~rohrhuber/][JITLib]].
