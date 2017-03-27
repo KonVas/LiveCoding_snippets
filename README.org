@@ -1,8 +1,7 @@
 * LiveCoding_snippets
 Boiler code for creating sound with the [[http://supercollider.github.io][SuperCollider]] language in a
-live set-up. The examples are using [[http://doc.sccode.org/Overviews/JITLib.html][JITLib]] which provides shortcuts
-and conveniences to build sound modules that allows to be reprogrammed
-in real time. For a very brief introduction on the SuperCollider
+live set-up. The examples are using [[http://doc.sccode.org/Overviews/JITLib.html][JITLib]], a set of tools for building sound modules that allows to be reprogrammed
+in real time bypassing standard SC requirements. For a very brief introduction on the SuperCollider
 language see [[./SuperCollider_tutorial.org]]. For a thorough overview refer to the help files of
 the language. All examples can be used at your own risk. More to
 come...
